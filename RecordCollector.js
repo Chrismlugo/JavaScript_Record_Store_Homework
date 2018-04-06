@@ -18,4 +18,10 @@ RecordCollector.prototype.sell = function (record) {
   _.remove(this.collection,record)
 };
 
+RecordCollector.prototype.collectionValue = function () {
+return  _.sumBy(this.collection, 'price');
+};
+
+
+
 module.exports = RecordCollector;

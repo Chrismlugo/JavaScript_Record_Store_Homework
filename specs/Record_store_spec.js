@@ -100,4 +100,14 @@ describe('Record Store', function(){
     assert.deepStrictEqual(recordCollector.collection, [record2]);
   })
 
+  it('collector can view total value of collection', function(){
+    recordCollector.buy(record1);
+    recordCollector.buy(record2);
+    recordCollector.buy(record3);
+    assert.strictEqual(recordCollector.collectionValue(), 39);
+
+  })
+
+
+
 })
