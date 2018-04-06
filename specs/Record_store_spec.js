@@ -12,10 +12,10 @@ describe('Record Store', function(){
 
   beforeEach(function(){
     recordStore = new RecordStore("Track Shack", "Glasgow");
-    record1 = new Record("Wovenhand", "Ten Stones", "Rock", 13);
-    record2 = new Record("Wovenhand", "The Laughing Stalk", "Rock", 13);
+    record1 = new Record("Wovenhand", "Ten Stones", "Folk", 13);
+    record2 = new Record("Wovenhand", "The Laughing Stalk", "Folk", 13);
     record3 = new Record("Led Zeppelin", "Physical Graffiti", "Rock", 13);
-    record4 = new Record("Pear Jam", "Ten", "Rock", 13);
+    record4 = new Record("Pear Jam", "Ten", "Grunge", 13);
 
   })
 
@@ -36,7 +36,7 @@ describe('Record Store', function(){
   })
 
   it('can print records details', function(){
-    assert.strictEqual(recordStore.recordDetails(record1), "artist: Wovenhand title: Ten Stones genre: Rock price: £13");
+    assert.strictEqual(recordStore.recordDetails(record1), "artist: Wovenhand title: Ten Stones genre: Folk price: £13");
   })
 
   it('store can list its inventory', function(){
@@ -65,6 +65,14 @@ describe('Record Store', function(){
     recordStore.sell(record1);
     recordStore.sell(record2);
     assert.strictEqual(recordStore.finances(), "Store Balance: £26 inventory Total: £26")
+  })
+
+  it('store can view records by genre', function(){
+    recordStore.addRecord(record1);
+    recordStore.addRecord(record2);
+    recordStore.addRecord(record3);
+    recordStore.addRecord(record4);
+    assert.deepStrictEqual(recordStore.findRecordsByGenre("Folk"), [record1, record2]);
   })
 
 })
