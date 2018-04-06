@@ -1,9 +1,11 @@
 var assert = require('assert');
 var RecordStore = require('../RecordStore.js');
 var Record = require('../Record.js');
+var RecordCollector = require('../RecordCollector.js');
 
 describe('Record Store', function(){
 
+  var recordCollector;
   var recordStore;
   var record1;
   var record2;
@@ -16,7 +18,7 @@ describe('Record Store', function(){
     record2 = new Record("Wovenhand", "The Laughing Stalk", "Folk", 13);
     record3 = new Record("Led Zeppelin", "Physical Graffiti", "Rock", 13);
     record4 = new Record("Pear Jam", "Ten", "Grunge", 13);
-
+    recordCollector = new RecordCollector("Alan", 50);
   })
 
   it('record store is initially empty', function(){
@@ -73,6 +75,12 @@ describe('Record Store', function(){
     recordStore.addRecord(record3);
     recordStore.addRecord(record4);
     assert.deepStrictEqual(recordStore.findRecordsByGenre("Folk"), [record1, record2]);
+  })
+
+  it('record collector can buy a record', function(){
+    recordCollector.buy(record1);
+    assert.strictEqual(recordCollector.cash, 37);
+    assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
 })
