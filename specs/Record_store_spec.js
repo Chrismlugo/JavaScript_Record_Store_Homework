@@ -92,4 +92,12 @@ describe('Record Store', function(){
     assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
+  it('collector cant spend over cash amount', function(){
+    record1.price = 60;
+    recordCollector.buy(record2);
+    recordCollector.buy(record1);
+    assert.strictEqual(recordCollector.cash, 37);
+    assert.deepStrictEqual(recordCollector.collection, [record2]);
+  })
+
 })
