@@ -5,3 +5,9 @@ const RecordStore = function(name,city){
   this.city = city;
   this.inventory = [];
 }
+
+RecordStore.prototype.countRecords = function (record) {
+  return this.inventory.length;
+};
+
+module.exports = RecordStore;
