@@ -6,9 +6,14 @@ const  RecordCollector = function(name,cash){
   this.cash = cash;
 }
 
-RecordCollector.prototype.buy= function (record) {
+RecordCollector.prototype.buy = function (record) {
   this.cash -= record.price;
   this.collection.push(record)
+};
+
+RecordCollector.prototype.sell = function (record) {
+  this.cash += record.price;
+  _.remove(this.collection,record)
 };
 
 module.exports = RecordCollector;
