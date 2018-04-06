@@ -108,6 +108,13 @@ describe('Record Store', function(){
 
   })
 
+  it('collector can view value of records of genre', function(){
+    recordCollector.buy(record1);
+    recordCollector.buy(record2);
+    recordCollector.buy(record3);
+    assert.strictEqual(recordCollector.genreValue("Folk"), 26);
+  })
+
 
 
 })

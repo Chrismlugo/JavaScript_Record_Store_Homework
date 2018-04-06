@@ -22,6 +22,10 @@ RecordCollector.prototype.collectionValue = function () {
 return  _.sumBy(this.collection, 'price');
 };
 
+RecordCollector.prototype.genreValue = function (genre) {
+  let filteredRecords = _.filter(this.collection, {genre: genre});
+  return _.sumBy(filteredRecords, 'price');
+};
 
 
 module.exports = RecordCollector;
