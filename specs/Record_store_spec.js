@@ -39,4 +39,32 @@ describe('Record Store', function(){
     assert.strictEqual(recordStore.recordDetails(record1), "artist: Wovenhand title: Ten Stones genre: Rock price: £13");
   })
 
+  it('store can list its inventory', function(){
+    recordStore.addRecord(record1);
+    recordStore.addRecord(record2);
+    recordStore.addRecord(record3);
+    recordStore.addRecord(record4);
+    assert.deepStrictEqual(recordStore.showInventory(), [record1, record2, record3, record4]);
+  })
+
+  it('store can sell a record', function(){
+    recordStore.addRecord(record1);
+    recordStore.addRecord(record2);
+    recordStore.addRecord(record3);
+    recordStore.addRecord(record4);
+    recordStore.sell(record1);
+    assert.strictEqual(recordStore.balance, 13);
+    assert.strictEqual(recordStore.countRecords(), 3);
+  })
+
+  it('store can show finances', function(){
+    recordStore.addRecord(record1);
+    recordStore.addRecord(record2);
+    recordStore.addRecord(record3);
+    recordStore.addRecord(record4);
+    recordStore.sell(record1);
+    recordStore.sell(record2);
+    assert.strictEqual(recordStore.finances(), "Store Balance: £26 inventory Total: £26")
+  })
+
 })
