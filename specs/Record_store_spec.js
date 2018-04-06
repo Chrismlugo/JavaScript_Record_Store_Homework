@@ -115,6 +115,14 @@ describe('Record Store', function(){
     assert.strictEqual(recordCollector.genreValue("Folk"), 26);
   })
 
+  it('collector can view most valuable record', function(){
+    record1.price = 17;
+    recordCollector.buy(record1);
+    recordCollector.buy(record2);
+    recordCollector.buy(record3);
+    assert.deepStrictEqual(recordCollector.highestValueRecord(), record1);
+  })
+
 
 
 })

@@ -27,5 +27,9 @@ RecordCollector.prototype.genreValue = function (genre) {
   return _.sumBy(filteredRecords, 'price');
 };
 
+RecordCollector.prototype.highestValueRecord = function () {
+  return _.maxBy(this.collection, 'price');
+};
+
 
 module.exports = RecordCollector;
