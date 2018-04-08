@@ -18,7 +18,7 @@ describe('Record Store', function(){
     record2 = new Record("Wovenhand", "The Laughing Stalk", "Folk", 13);
     record3 = new Record("Led Zeppelin", "Physical Graffiti", "Rock", 13);
     record4 = new Record("Pear Jam", "Ten", "Grunge", 13);
-    recordCollector = new RecordCollector("Alan", 50);
+    recordCollector = new RecordCollector("Alan", 80);
   })
 
   it('record store is initially empty', function(){
@@ -79,24 +79,24 @@ describe('Record Store', function(){
 
   it('record collector can buy a record', function(){
     recordCollector.buy(record1);
-    assert.strictEqual(recordCollector.cash, 37);
+    assert.strictEqual(recordCollector.cash, 67);
     assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
   it('collector can sell a record', function(){
     recordCollector.buy(record1);
     recordCollector.buy(record2);
-    assert.strictEqual(recordCollector.cash, 24);
+    assert.strictEqual(recordCollector.cash, 54);
     recordCollector.sell(record2);
-    assert.strictEqual(recordCollector.cash, 37);
+    assert.strictEqual(recordCollector.cash, 67);
     assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
   it('collector cant spend over cash amount', function(){
-    record1.price = 60;
+    record1.price = 80;
     recordCollector.buy(record2);
     recordCollector.buy(record1);
-    assert.strictEqual(recordCollector.cash, 37);
+    assert.strictEqual(recordCollector.cash, 67);
     assert.deepStrictEqual(recordCollector.collection, [record2]);
   })
 
@@ -121,6 +121,15 @@ describe('Record Store', function(){
     recordCollector.buy(record2);
     recordCollector.buy(record3);
     assert.deepStrictEqual(recordCollector.highestValueRecord(), record1);
+  })
+
+  it('collector can sort collection by value', function(){
+    record1.price = 17;
+    record2.price = 25;
+    recordCollector.buy(record1);
+    recordCollector.buy(record2);
+    recordCollector.buy(record3);
+    assert.deepStrictEqualstrictEqual(recordCollector.sortByValue(),[record3, record1, record2] )
   })
 
 
