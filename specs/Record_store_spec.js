@@ -4,21 +4,31 @@ var Record = require('../Record.js');
 var RecordCollector = require('../RecordCollector.js');
 
 describe('Record Store', function(){
-
+  var otherCollector;
   var recordCollector;
   var recordStore;
   var record1;
   var record2;
   var record3;
   var record4;
+  var record5;
+  var record6;
+  var record7;
+  var record8;
 
   beforeEach(function(){
     recordStore = new RecordStore("Track Shack", "Glasgow");
-    record1 = new Record("Wovenhand", "Ten Stones", "Folk", 13);
-    record2 = new Record("Wovenhand", "The Laughing Stalk", "Folk", 13);
-    record3 = new Record("Led Zeppelin", "Physical Graffiti", "Rock", 13);
-    record4 = new Record("Pear Jam", "Ten", "Grunge", 13);
+    record1 = new Record("Wovenhand", "Ten Stones", "Folk", 19);
+    record2 = new Record("Wovenhand", "The Laughing Stalk", "Folk", 15);
+    record3 = new Record("Led Zeppelin", "Physical Graffiti", "Rock", 33);
+    record4 = new Record("Pear Jam", "Ten", "Grunge", 25);
+    record5 = new Record("The Gun Club", "Miami", "rock", 30);
+    record6 = new Record("Fatboy Slim", "Halfway between the gutter and the stars", "dance", 23);
+    record7 = new Record("Jimi Hendrix", "Band of Gypsys", "psychedelic", 35);
+    record8 = new Record("Daft Punk", "Discovery", "Dance", 30);
     recordCollector = new RecordCollector("Alan", 80);
+    otherCollector = new RecordCollector("Ron", 150);
+    otherCollector.collection = [record5, record6, record7, record8];
   })
 
   it('record store is initially empty', function(){
@@ -38,7 +48,7 @@ describe('Record Store', function(){
   })
 
   it('can print records details', function(){
-    assert.strictEqual(recordStore.recordDetails(record1), "artist: Wovenhand title: Ten Stones genre: Folk price: £13");
+    assert.strictEqual(recordStore.recordDetails(record1), "artist: Wovenhand title: Ten Stones genre: Folk price: £19");
   })
 
   it('store can list its inventory', function(){
@@ -55,7 +65,7 @@ describe('Record Store', function(){
     recordStore.addRecord(record3);
     recordStore.addRecord(record4);
     recordStore.sell(record1);
-    assert.strictEqual(recordStore.balance, 13);
+    assert.strictEqual(recordStore.balance, 19);
     assert.strictEqual(recordStore.countRecords(), 3);
   })
 
@@ -66,7 +76,7 @@ describe('Record Store', function(){
     recordStore.addRecord(record4);
     recordStore.sell(record1);
     recordStore.sell(record2);
-    assert.strictEqual(recordStore.finances(), "Store Balance: £26 inventory Total: £26")
+    assert.strictEqual(recordStore.finances(), "Store Balance: £34 inventory Total: £58")
   })
 
   it('store can view records by genre', function(){
@@ -79,16 +89,16 @@ describe('Record Store', function(){
 
   it('record collector can buy a record', function(){
     recordCollector.buy(record1);
-    assert.strictEqual(recordCollector.cash, 67);
+    assert.strictEqual(recordCollector.cash, 61);
     assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
   it('collector can sell a record', function(){
     recordCollector.buy(record1);
     recordCollector.buy(record2);
-    assert.strictEqual(recordCollector.cash, 54);
+    assert.strictEqual(recordCollector.cash, 46);
     recordCollector.sell(record2);
-    assert.strictEqual(recordCollector.cash, 67);
+    assert.strictEqual(recordCollector.cash, 61);
     assert.deepStrictEqual(recordCollector.collection, [record1]);
   })
 
@@ -96,7 +106,7 @@ describe('Record Store', function(){
     record1.price = 80;
     recordCollector.buy(record2);
     recordCollector.buy(record1);
-    assert.strictEqual(recordCollector.cash, 67);
+    assert.strictEqual(recordCollector.cash, 65);
     assert.deepStrictEqual(recordCollector.collection, [record2]);
   })
 
@@ -104,7 +114,7 @@ describe('Record Store', function(){
     recordCollector.buy(record1);
     recordCollector.buy(record2);
     recordCollector.buy(record3);
-    assert.strictEqual(recordCollector.collectionValue(), 39);
+    assert.strictEqual(recordCollector.collectionValue(), 67);
 
   })
 
@@ -112,7 +122,7 @@ describe('Record Store', function(){
     recordCollector.buy(record1);
     recordCollector.buy(record2);
     recordCollector.buy(record3);
-    assert.strictEqual(recordCollector.genreValue("Folk"), 26);
+    assert.strictEqual(recordCollector.genreValue("Folk"), 34);
   })
 
   it('collector can view most valuable record', function(){
@@ -120,18 +130,30 @@ describe('Record Store', function(){
     recordCollector.buy(record1);
     recordCollector.buy(record2);
     recordCollector.buy(record3);
-    assert.deepStrictEqual(recordCollector.highestValueRecord(), record1);
+    assert.deepStrictEqual(recordCollector.highestValueRecord(), record3);
   })
 
-  it('collector can sort collection by value', function(){
+  it('collector can sort collection by value-- lowest', function(){
     record1.price = 17;
     record2.price = 25;
     recordCollector.buy(record1);
     recordCollector.buy(record2);
     recordCollector.buy(record3);
-    assert.deepStrictEqualstrictEqual(recordCollector.sortByValue(),[record3, record1, record2] )
+    assert.deepStrictEqual(recordCollector.sortByLowestValue(),[record1, record2, record3] )
   })
 
+  it('collector can sort collection by value-- highest', function(){
+    record1.price = 17;
+    record2.price = 25;
+    recordCollector.buy(record1);
+    recordCollector.buy(record2);
+    recordCollector.buy(record3);
+    assert.deepStrictEqual(recordCollector.sortByHighestValue(),[record3, record2, record1] )
+  })
 
+it('collector can compare collection value with another collector', function(){
+  recordCollector.collection = [record1, record2, record3, record4];
+ assert.strictEqual(recordCollector.compareValue(otherCollector), -26);
+})
 
 })

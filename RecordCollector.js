@@ -31,5 +31,18 @@ RecordCollector.prototype.highestValueRecord = function () {
   return _.maxBy(this.collection, 'price');
 };
 
+RecordCollector.prototype.sortByLowestValue = function () {
+  return _.sortBy(this.collection, 'price');
+};
+
+RecordCollector.prototype.sortByHighestValue = function () {
+  let result = _.sortBy(this.collection, 'price');
+  return _.reverse(result);
+};
+
+RecordCollector.prototype.compareValue = function (RecordCollector) {
+  return this.collectionValue() - RecordCollector.collectionValue();
+};
+
 
 module.exports = RecordCollector;
